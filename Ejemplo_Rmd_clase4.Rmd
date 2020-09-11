@@ -1,0 +1,39 @@
+---
+title: "Ejemplo_Clase4"
+author: "Camilo Behrens"
+date: "9/10/2020"
+output: 
+  bookdown::html_document2:
+    fig.caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, error = FALSE, message = FALSE)
+library(tidyverse)
+library(kableExtra)
+```
+
+# Hacer una gráfica
+
+Este texto va antes de la figura
+
+```{r, fig.cap= "Distribución del ancho del pétalo para cada especie de Iris", fig.align='center'}
+ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y = Sepal.Width)) + 
+  geom_boxplot(notch = T) + 
+  geom_jitter(aes(color = Species)) + 
+  xlab("Especie") + ylab("Ancho Sépalo")
+```
+
+
+Despues voy a hcer otra cosa, por ejemplo una tabla, veamos las medias en una tabla
+\@ref(tab:TablaFloral)
+
+```{r, Transformacion}
+iris2 <- iris %>% group_by(Species) %>% summarise_all(mean)
+
+```
+
+```{r, TablaFloral}
+kable(iris2, caption = "Medias de las medidas florales en las especies del genero Iris") %>% kable_styling(bootstrap_options = c("striped"))
+```
+
